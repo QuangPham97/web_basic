@@ -1,0 +1,10 @@
+prettier : code formater
+HTML Snippets
+Live server : 
+material icon theme
+Highlight Matching Tag
+Auto Rename Tag
+brecket pair colorizer
+HTML to CSS autocompletion
+SCSS Intelisense
+HTML Tag wrap

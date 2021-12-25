@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>BEM PRACTICE</title>
+</head>
+
+<body>
+    <!-- button 
+    <div>
+        <a class="btn btn--success">GO TO NEXT APPROVAL</a>
+        <a class="btn btn--warn">OK</a>
+        <a class="btn btn--error">TRY AGAIN</a>
+    </div>
+    -->
+    <!-- Success 
+    <div id="toast">
+        <div class="toast toast--success">
+            <div class="toast__icon">
+                <i class="far fa-check-circle"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Success</h3>
+                <p class="toast__msg">Máy tính kết nối với các hệ điều hành Windows, Linux </p>
+            </div>
+            <div class="toast__close">
+                <i class="far fa-times-circle"></i>
+            </div>
+        </div>
+    </div>
+    -->
+    <!-- Warning -->
+    <div id="toast"></div>
+    <div>
+        <div onclick="showSuccessToast()" class="btn btn--success">Show Success</div>
+        <div onclick="showErrorToast()" class="btn btn--error">Show Error</div>
+    </div>
+
+    <script>
+        function toast({
+            title = '',
+            message = '',
+            type = 'info', 
+            duration = 3000
+        }) {
+            const main = document.getElementById('toast')
+            if(main)
+            {
+                const toast = document.createElement('div');
+                /* Remove toast time out */
+                const autoRemoved = setTimeout(function(){
+                    main.removeChild(toast);
+                }, duration + 1000);
+                /* Remove toast when click */
+                toast.onclick = function(event){
+                    if(event.target.closest('.toast__close')){
+                        main.removeChild(toast);
+                        clearTimeout(autoRemoved);
+                    }
+                }
+                const icons = {
+                    success: 'far fa-check-circle',
+                    warning: 'fas fa-exclamation-triangle',
+                    error: 'fas fa-exclamation-circle'
+                };
+                const icon = icons[type];
+                const delay = (duration / 1000).toFixed(2);
+                toast.classList.add('toast', `toast--${type}`);
+                toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+                toast.innerHTML = `
+                    <div class="toast__icon">
+                        <i class="${icon}"></i>
+                    </div>
+                    <div class="toast__body">
+                        <h3 class="toast__title">${title}</h3>
+                        <p class="toast__msg">${message}</p>
+                    </div>
+                    <div class="toast__close">
+                        <i class="far fa-times-circle"></i>
+                    </div>
+                `;
+                main.appendChild(toast);
+            }
+        }
+
+        function showSuccessToast()
+        {
+            toast({
+            title: "Thành công!",
+            message: "Bạn đã đăng nhập thành công",
+            type: "success",
+            duration: 5000
+            });
+        }
+        function showErrorToast()
+        {
+            toast({
+            title: "Lỗi",
+            message: "Sai mật khẩu hoặc tên người dùng",
+            type: "error",
+            duration: 5000
+            });
+        }
+
+
+    </script>
+</body>
+</html>
